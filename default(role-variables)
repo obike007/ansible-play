@@ -1,0 +1,7 @@
+webuser: webuser
+webgroup: webadmin
+webservername: apache2
+webservstate: present
+webservsvc: started
+webcode: https://github.com/deepakydv9315/payment-sass-project/archive/refs/heads/main.zip
+webfolder: /var/www/html
