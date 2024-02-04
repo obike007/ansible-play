@@ -1,0 +1,5 @@
+- hosts: app01
+  name: Setting up Web Server
+  become: true
+  roles:
+  - webserv
