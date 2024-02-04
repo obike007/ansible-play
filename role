@@ -1,0 +1,30 @@
+- name: Create Web Group
+  group:
+    name: "{{ webgroup}}"
+    state: "{{webservstate}}"
+    gid: 401
+
+- name: Create web user
+  user: 
+    name: "{{webuser}}"
+    state: "{{webservstate}}"
+    uid: 400
+    groups: "{{webgroup}}"
+
+- name: Update Server
+  shell: apt update -y
+
+- name: Install Unzip
+  apt:
+    name: unzip
+    state: "{{webservstate}}"
+
+- name: Install Apache Web Server
+  apt: 
+    name: "{{webservername}}" #apache2
+    state: "{{webservstate}}" #present
+
+-name: Start the apache service
+ service: 
+   name: "{{webservername}}"
+   state: "{{webservsvc}}" #started
