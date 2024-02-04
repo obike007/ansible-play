@@ -1,0 +1,52 @@
+- hosts: web01
+  become: true
+  tasks:
+  - name: Create Group
+    group:
+      name: banking
+      gid: 777
+
+  - name: Create User
+    user:
+      name: mike
+      state: present
+      uid: 778
+      groups: banking
+     
+  - name: Create files
+    file: 
+      path: /opt/webconfig.conf
+      state: touch
+      owner: mike
+      group: banking
+
+  - name: Create Web folder
+    file:
+      path: /opt/webfiles
+      state: directory
+      owner: mike
+      group: banking
+
+  - name: Install Apache2 and Download Files from the internet
+    apt:
+      name: apache2
+      state: present
+   
+  - name: Start the apache2 service
+    service: 
+      name: apache2
+      state: started
+      enabled: yes
+
+  - name: Decompress the downloaded file
+    unarchive: 
+      src: https://github.com/ShaifArfan/one-page-website-html-css-project/archive/refs/heads/master.zip
+      dest: /var/www/html
+      remote_src: yes
+   
+  - name: Copy Downloaded content into /var/www/html
+    shell: |
+              cd /var/www/html && cp -r one-page-website-html-css-project-master/* /var/www/html/
+ 
+   
+   
