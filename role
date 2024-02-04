@@ -21,10 +21,22 @@
 
 - name: Install Apache Web Server
   apt: 
-    name: "{{webservername}}" #apache2
-    state: "{{webservstate}}" #present
+    name: "{{webservername}}"
+    state: "{{webservstate}}"
 
--name: Start the apache service
+- name: Start the apache service
  service: 
    name: "{{webservername}}"
-   state: "{{webservsvc}}" #started
+   state: "{{webservsvc}}"
+
+- name: Download application
+  unarchive:
+    src: "{{webcode}}"
+    dest: "{{webfolder}}"
+    remote_src: yes
+
+- name: Copy Web content
+  shell: cd "{{webfolde}}"/payment-saas-project-main &&
+         cp -r * "{{webfolder}}"
+         
+
